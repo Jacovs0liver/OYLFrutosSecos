@@ -1,0 +1,11 @@
+.gradle/
+.idea/
+local.properties
+**/build/
+*.jks
+*.keystore
+captures/
+
+.kotlin/
+gradle/wrapper/gradle-*-bin.zip
+*.mp4

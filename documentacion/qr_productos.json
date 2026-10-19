@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "nombre": "Almendras naturales",
+    "descripcion": "Almendras naturales sin sal. Producto sintético para la demostración académica.",
+    "precio": 3490
+  },
+  {
+    "nombre": "Almendras",
+    "descripcion": "Almendras naturales de prueba",
+    "precio": 5000
+  }
+]
