@@ -1,43 +1,44 @@
 # OYL Frutos Secos
 
-Aplicación Android académica de Oliver Edgardo Jacobs Suazo.
-DSY1105, sección 004D, Duoc UC. Profesor: Cristián Armando Gómez Vega.
+Aplicación Android para consultar productos, realizar pedidos y administrar inventario.
 
-## Funciones
-- Registro e inicio de sesión de clientes y acceso de administrador.
-- Catálogo, carrito y pago académico simulado, sin cobro real.
-- Pedidos y cambios de estado; inventario y aviso de stock bajo (5 unidades o menos).
-- Persistencia local con Room sobre SQLite.
-- Cámara, lector QR, mapa y animaciones.
+**Estudiante:** Oliver Edgardo Jacobs Suazo  
+**Asignatura:** Desarrollo de Aplicaciones Móviles (DSY1105), sección 004D  
+**Profesor:** Cristián Armando Gómez Vega — Duoc UC
 
-## Organización
-Kotlin, Jetpack Compose y Material 3. La interfaz utiliza un ViewModel, repositorio y DAO.
-El código está en `app/src/main/java/cl/oyl/frutossecos`.
+## Funcionalidades
 
-## Ejecutar
-1. Clonar o descargar este repositorio y abrir su raíz en Android Studio.
-2. Usar JDK 21 y Android SDK 36. Mantener las versiones de dependencias del proyecto.
-3. Sincronizar con conexión a Internet. El wrapper descarga Gradle 8.14.3.
-4. Conectar un teléfono Android compatible (mínimo API 26) y ejecutar `app`.
+- Registro e inicio de sesión de clientes y administrador.
+- Catálogo, carrito y confirmación de pedidos con pago simulado.
+- Gestión de productos, inventario y estados de pedidos.
+- Almacenamiento local con Room sobre SQLite.
+- Cámara, lectura QR, mapas y animaciones.
 
-En Windows:
+## Tecnologías
+
+Kotlin, Jetpack Compose, Material 3 y Room. El proyecto separa pantallas, ViewModel, repositorio y DAO.
+
+## Ejecutar el proyecto
+
+1. Descargar o clonar el repositorio y abrirlo en Android Studio.
+2. Configurar JDK 21 y Android SDK 36.
+3. Sincronizar Gradle con conexión a Internet.
+4. Conectar un teléfono con Android 8.0 o superior y ejecutar `app`.
+
+Para compilar y ejecutar las pruebas unitarias en Windows:
+
 ```powershell
 .\gradlew.bat testDebugUnitTest assembleDebug
 ```
 
-Administrador de demostración: alias `admin`, contraseña `123`.
-Los clientes se crean desde Registro. Utilizar datos ficticios.
-El lector QR requiere servicios de Google Play.
+## Acceso de prueba
 
-## Verificaciones y alcance
-El estudiante ejecutó la compilación y pruebas unitarias en su PC y confirmó funcionamiento en HONOR RBN-NX3: conservación de productos y pedidos, compra y descuento de stock, QR, mapas, roles y validaciones. No se ha ejecutado una nueva compilación en este entorno ni se certifica la ejecución de las pruebas instrumentadas.
+Administrador: usuario `admin`, contraseña `123`. Para ingresar como cliente, crear una cuenta desde Registro con datos de prueba.
 
-Proyecto académico local: no existe cobro real, backend ni sincronización de inventario entre dispositivos. Los avisos locales no son notificaciones push.
+## Alcance
 
-## Procedencia de esta publicación
-Importación posterior a la entrega de AVA, realizada a partir de `Oliver_Jacobs_OYL.zip`. No representa un historial de desarrollo previo ni acredita trabajo colaborativo.
-Se conservan los archivos fuente de la aplicación. Se excluyen cachés, compilados, configuración local, video y la distribución binaria de Gradle. Se adapta únicamente la URL del wrapper a la descarga oficial de la misma versión, junto con este README y las exclusiones de Git.
-El ZIP y el video entregados en AVA permanecen sin cambios.
+El pago es una simulación sin cobro real. Los datos se guardan en el teléfono y no se sincronizan entre dispositivos. El lector QR requiere servicios de Google Play.
 
-Los documentos de `documentacion/` se conservan como registros históricos: pueden contener pendientes y estados anteriores. Este README aclara el estado de publicación.
-La planificación en Trello y la revisión del profesor siguen pendientes.
+La versión entregada se compiló y probó en un HONOR RBN-NX3. Esta copia usa la descarga oficial de Gradle 8.14.3 y todavía no se ha recompilado desde GitHub. Las pruebas instrumentadas siguen pendientes.
+
+La carpeta `documentacion` contiene material de apoyo y registros de revisiones anteriores.
