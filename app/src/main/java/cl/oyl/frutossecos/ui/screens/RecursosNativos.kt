@@ -38,7 +38,7 @@ fun Escaner(s: EstadoOyl, vm: OylViewModel) {
     Pagina {
         Text("Conoce tu producto al instante", style = MaterialTheme.typography.headlineSmall)
         Text(if (s.esAdmin) "Escanea la etiqueta para abrir el inventario del producto." else "Escanea la etiqueta para consultar su precio, presentación y disponibilidad.")
-        Button(onClick = {
+        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = {
             leyendo = true
             val opciones = GmsBarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
             try {
@@ -59,7 +59,7 @@ fun Escaner(s: EstadoOyl, vm: OylViewModel) {
                         Text(leido.nombre, style = MaterialTheme.typography.titleLarge)
                         Text(leido.descripcion)
                         Text(pesos(leido.precio.toLong()), style = MaterialTheme.typography.titleMedium)
-                        if (registrado != null) Button(onClick = { vm.abrir(if (s.esAdmin) Ruta.Inventario else Ruta.Detalle, registrado.id) }) {
+                        if (registrado != null) Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(if (s.esAdmin) Ruta.Inventario else Ruta.Detalle, registrado.id) }) {
                             Text(if (s.esAdmin) "Abrir inventario" else "Ver ficha y disponibilidad")
                         } else Text("Este producto no está registrado en el catálogo disponible.")
                     }
@@ -135,7 +135,7 @@ fun Mapa(s: EstadoOyl, vm: OylViewModel) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(onClick = { mapa.controller.zoomIn() }) { Text("+") }
             OutlinedButton(onClick = { mapa.controller.zoomOut() }) { Text("−") }
-            Button(onClick = {
+            Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = {
                 val lista = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 if (lista.any { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED }) ubicar()
                 else permisos.launch(lista)

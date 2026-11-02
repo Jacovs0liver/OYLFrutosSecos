@@ -1,0 +1,3 @@
+Abrir documentacion/Guion_breve_y_respuestas.md para preparar la defensa con el código final.
+Resultados reales y comandos: documentacion/Pruebas.md
+No desinstalar ni borrar datos del HONOR para actualizar la aplicación.

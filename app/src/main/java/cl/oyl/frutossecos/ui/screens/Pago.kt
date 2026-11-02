@@ -20,11 +20,11 @@ fun Pago(s: EstadoOyl, vm: OylViewModel) {
             }
         }
         Text("Confirma para registrar tu pedido y consultar su estado en Mis pedidos.")
-        Button(onClick = vm::comprar, enabled = !s.ocupado && s.carrito.isNotEmpty(), modifier = Modifier.fillMaxWidth()) {
-            Text("Confirmar pedido")
+        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = vm::comprar, enabled = !s.ocupado && s.carrito.isNotEmpty(), modifier = Modifier.fillMaxWidth()) {
+            Text("Aceptar compra")
         }
         OutlinedButton(onClick = { vm.abrir(Ruta.PagoFallido) }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) {
-            Text("Ver ejemplo de pago rechazado")
+            Text("Rechazar compra")
         }
     }
 }
@@ -32,18 +32,18 @@ fun Pago(s: EstadoOyl, vm: OylViewModel) {
 @Composable
 fun PagoExitoso(s: EstadoOyl, vm: OylViewModel) {
     Pagina {
-        Exito("Pedido recibido", "Pedido #${s.pedidoCreado} recibido. Estado: Pendiente de Validación.")
+        Exito("Pago exitoso", "Pedido #${s.pedidoCreado} recibido. Estado: Pendiente de Validación.")
         Text("Compra simulada. No se realizó ningún cobro.")
-        Button(onClick = { vm.abrir(Ruta.Pedidos) }, modifier = Modifier.fillMaxWidth()) { Text("Ver mis pedidos") }
+        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Pedidos) }, modifier = Modifier.fillMaxWidth()) { Text("Ver mis pedidos") }
     }
 }
 
 @Composable
 fun PagoFallido(vm: OylViewModel) {
     Pagina {
-        Text("No se pudo completar el pago", style = MaterialTheme.typography.headlineMedium)
-        Text("Este es un ejemplo de pago rechazado. No se realizó ningún cobro y tus productos siguen en el carrito.")
-        Button(onClick = { vm.abrir(Ruta.Pago) }, modifier = Modifier.fillMaxWidth()) { Text("Volver a intentar") }
+        Text("Pago fallido", style = MaterialTheme.typography.headlineMedium)
+        Text("Compra rechazada. No se registró el pedido. Tus productos siguen en el carrito.")
+        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Pago) }, modifier = Modifier.fillMaxWidth()) { Text("Volver a intentar") }
         OutlinedButton(onClick = { vm.abrir(Ruta.Carrito) }) { Text("Volver a mi carrito") }
     }
 }

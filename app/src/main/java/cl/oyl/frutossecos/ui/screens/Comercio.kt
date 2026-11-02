@@ -32,14 +32,14 @@ fun Inicio(s: EstadoOyl, vm: OylViewModel) {
                 if (s.esAdmin) {
                     Text("${s.pedidos.count { it.estado == Validaciones.estados.first() }} pedidos pendientes")
                     Text("${s.productos.count { it.activo && it.stock <= 5 }} productos con stock bajo")
-                    Button(onClick = { vm.abrir(Ruta.Productos) }) { Text("Crear producto") }
+                    Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Productos) }) { Text("Crear producto") }
                     OutlinedButton(onClick = { vm.abrir(Ruta.Inventario) }) { Text("Gestionar inventario") }
                 } else {
                     Text("${s.carrito.sumOf { it.cantidad }} unidades en tu carrito")
                     Text("Total: ${pesos(s.total)}")
                     OutlinedButton(onClick = { vm.abrir(Ruta.Carrito) }) { Text("Ver mi carrito") }
                 }
-                Button(onClick = { vm.abrir(Ruta.Catalogo) }) { Text(if (s.esAdmin) "Consultar y editar catálogo" else "Explorar catálogo") }
+                Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Catalogo) }) { Text(if (s.esAdmin) "Consultar y editar catálogo" else "Explorar catálogo") }
             }
         }
         Text("Selección OYL", style = MaterialTheme.typography.titleLarge)
@@ -97,7 +97,7 @@ fun Detalle(s: EstadoOyl, vm: OylViewModel) {
         Text(pesos(p.precio.toLong()), style = MaterialTheme.typography.headlineSmall)
         Text(if (p.activo) "Disponibles: ${p.stock}" else "Producto inactivo")
         if (s.esAdmin) {
-            Button(onClick = { vm.abrir(Ruta.Productos, p.id) }, modifier = Modifier.fillMaxWidth()) { Text("Editar producto") }
+            Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Productos, p.id) }, modifier = Modifier.fillMaxWidth()) { Text("Editar producto") }
             OutlinedButton(onClick = { vm.abrir(Ruta.Inventario, p.id) }, modifier = Modifier.fillMaxWidth()) { Text("Ajustar inventario") }
         } else {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -105,7 +105,7 @@ fun Detalle(s: EstadoOyl, vm: OylViewModel) {
                 Text(cantidad.toString(), style = MaterialTheme.typography.titleLarge)
                 OutlinedButton(onClick = { cantidad++ }, enabled = cantidad < minOf(p.stock, 999)) { Text("+") }
             }
-            Button(onClick = { vm.agregar(p.id, cantidad) }, enabled = p.activo && p.stock > 0, modifier = Modifier.fillMaxWidth()) { Text("Agregar · ${pesos(p.precio.toLong() * cantidad)}") }
+            Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.agregar(p.id, cantidad) }, enabled = p.activo && p.stock > 0, modifier = Modifier.fillMaxWidth()) { Text("Agregar · ${pesos(p.precio.toLong() * cantidad)}") }
         }
     }
 }
@@ -115,7 +115,7 @@ fun Carrito(s: EstadoOyl, vm: OylViewModel) {
     Pagina {
         if (s.carrito.isEmpty()) {
             MensajeVacio("Tu carrito está vacío", "Explora el catálogo y agrega tus productos favoritos.")
-            Button(onClick = { vm.abrir(Ruta.Catalogo) }) { Text("Ir al catálogo") }
+            Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Catalogo) }) { Text("Ir al catálogo") }
         }
         s.carrito.forEach { item ->
             Card(Modifier.fillMaxWidth().animateContentSize()) {
@@ -141,7 +141,7 @@ fun Carrito(s: EstadoOyl, vm: OylViewModel) {
         if (s.carrito.isNotEmpty()) {
             HorizontalDivider()
             Text("Total: ${pesos(s.total)}", style = MaterialTheme.typography.headlineSmall)
-            Button(onClick = { vm.abrir(Ruta.Confirmacion) }, modifier = Modifier.fillMaxWidth()) { Text("Continuar con mi pedido") }
+            Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Confirmacion) }, modifier = Modifier.fillMaxWidth()) { Text("Continuar con mi pedido") }
         }
     }
 }
@@ -157,7 +157,7 @@ fun Confirmacion(s: EstadoOyl, vm: OylViewModel) {
             Text("Total: ${pesos(s.total)}", style = MaterialTheme.typography.titleLarge)
             Opciones(listOf("Retiro en tienda", "Despacho a domicilio"), modalidad) { vm.cambiarCampo("modalidad", it) }
             CampoFormularioTexto("Contacto y dirección", "contacto", s, vm)
-            Button(onClick = { vm.prepararPago(modalidad, contacto) }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) { Text("Continuar al pago") }
+            Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.prepararPago(modalidad, contacto) }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) { Text("Continuar al pago") }
         } else MensajeVacio("Sin artículos", "Agrega productos al carrito para realizar un pedido.")
     }
 }

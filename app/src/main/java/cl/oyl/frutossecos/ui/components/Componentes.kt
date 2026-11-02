@@ -10,6 +10,8 @@ import android.provider.MediaStore
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import cl.oyl.frutossecos.R
+import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -133,12 +135,25 @@ fun Foto(uri: String, nombre: String, modifier: Modifier = Modifier) {
             }.getOrNull()
         }
     }
+    val recurso = when (nombre) {
+        "Almendras naturales" -> R.drawable.foto_almendras
+        "Nueces mariposa" -> R.drawable.foto_nueces
+        "Maní tostado" -> R.drawable.foto_mani
+        "Pistachos" -> R.drawable.foto_pistachos
+        "Semillas de chía" -> R.drawable.foto_chia
+        "Semillas de zapallo" -> R.drawable.foto_zapallo
+        "Linaza" -> R.drawable.foto_linaza
+        "Pasas rubias" -> R.drawable.foto_pasas
+        "Cranberries" -> R.drawable.foto_cranberries
+        else -> null
+    }
     val img = bitmap
     if (img != null) Image(img, contentDescription = nombre, modifier = modifier.clip(RoundedCornerShape(16.dp)), contentScale = ContentScale.Crop)
-    else Box(modifier.clip(RoundedCornerShape(16.dp)).background(Color(0xFFF0E4CE)), contentAlignment = Alignment.Center) {
+    else if (uri.isBlank() && recurso != null) Image(painterResource(recurso), contentDescription = nombre, modifier = modifier.clip(RoundedCornerShape(16.dp)), contentScale = ContentScale.Crop)
+    else Box(modifier.clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surfaceVariant), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(12.dp)) {
-            Text("OYL", style = MaterialTheme.typography.headlineMedium, color = Color(0xFF184D38))
-            Text(nombre, style = MaterialTheme.typography.labelMedium, color = Color(0xFF67472F))
+            Text("OYL", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(nombre, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

@@ -21,7 +21,25 @@ import cl.oyl.frutossecos.ui.screens.*
 fun OylApp(vm: OylViewModel) {
     val s by vm.estado.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
-    val colores = lightColorScheme(primary = Color(0xFF184D38), onPrimary = Color.White, primaryContainer = Color(0xFFD8EBDD), secondary = Color(0xFF87552F), background = Color(0xFFFCFAF5), surface = Color(0xFFFCFAF5), surfaceVariant = Color(0xFFF0EBDD))
+    val colores = darkColorScheme(
+        primary = Color(0xFFA1D5AE), onPrimary = Color(0xFF102D1C),
+        primaryContainer = Color(0xFF286044), onPrimaryContainer = Color(0xFFFFF9EF),
+        secondary = Color(0xFFD5C1A2), onSecondary = Color(0xFF211C16),
+        secondaryContainer = Color(0xFF234C35), onSecondaryContainer = Color(0xFFE1F2E5),
+        tertiary = Color(0xFFD5C1A2), onTertiary = Color(0xFF211C16),
+        tertiaryContainer = Color(0xFF443B2F), onTertiaryContainer = Color(0xFFF3EEE5),
+        background = Color(0xFF101311), onBackground = Color(0xFFF3EEE5),
+        surface = Color(0xFF191D1A), onSurface = Color(0xFFF3EEE5),
+        surfaceVariant = Color(0xFF252C27), onSurfaceVariant = Color(0xFFC5CDC6),
+        surfaceTint = Color(0xFFA1D5AE),
+        surfaceDim = Color(0xFF101311), surfaceBright = Color(0xFF303831),
+        surfaceContainerLowest = Color(0xFF0C100D), surfaceContainerLow = Color(0xFF151A16),
+        surfaceContainer = Color(0xFF191F1B), surfaceContainerHigh = Color(0xFF222A24),
+        surfaceContainerHighest = Color(0xFF2C352E),
+        inverseSurface = Color(0xFFE1E7DE), inverseOnSurface = Color(0xFF191D1A),
+        inversePrimary = Color(0xFF286044),
+        outline = Color(0xFF89988D), outlineVariant = Color(0xFF414D44)
+    )
     LaunchedEffect(s.mensaje) { s.mensaje?.let { snackbar.showSnackbar(it); vm.consumirMensaje() } }
     BackHandler(enabled = s.historial.isNotEmpty() || s.ruta !in listOf(Ruta.Inicio, Ruta.Bienvenida)) { vm.volver() }
     MaterialTheme(colorScheme = colores) {

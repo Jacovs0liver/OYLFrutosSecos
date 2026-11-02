@@ -40,7 +40,7 @@ fun GestionProducto(s: EstadoOyl, vm: OylViewModel) {
             Text("Visible en el catálogo")
             Switch(checked = activo, onCheckedChange = { vm.cambiarCampo("activo", it.toString()) })
         }
-        Button(onClick = { vm.guardarProducto(p?.id, nombre, categoria, descripcion, presentacion, precio, stock, imagen, activo) }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) { Text("Guardar producto") }
+        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.guardarProducto(p?.id, nombre, categoria, descripcion, presentacion, precio, stock, imagen, activo) }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) { Text("Guardar producto") }
     }
 }
 
@@ -69,7 +69,7 @@ fun Inventario(s: EstadoOyl, vm: OylViewModel) {
             Opciones(listOf("Entrada", "Salida"), tipo) { vm.cambiarCampo("tipo", it) }
             CampoFormularioTexto("Cantidad de unidades", "cantidad", s, vm, numero = true)
             CampoFormularioTexto("Motivo del movimiento", "motivo", s, vm)
-            Button(onClick = { vm.moverStock(p.id, tipo == "Entrada", cantidad, motivo) }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) { Text("Registrar movimiento") }
+            Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.moverStock(p.id, tipo == "Entrada", cantidad, motivo) }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) { Text("Registrar movimiento") }
             HorizontalDivider()
             Text("Últimos movimientos", style = MaterialTheme.typography.titleMedium)
             s.movimientos.filter { it.productoId == p.id }.take(12).forEach {

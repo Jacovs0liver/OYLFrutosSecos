@@ -1,54 +1,67 @@
-> Estado actualizado: consulta `Revision_final.md`. Las verificaciones históricas de este documento no certifican la compilación de la revisión actual. La comparación directa de 101/102/106 está documentada en Comparacion_verificada.md.
+# Validación de OYL EP2
 
-# Pruebas antes de entregar
+Base: OYL_EP2_Final.zip, SHA-256 `a1d121dcae9a49701bf91876ad5c32986712477971e8d822e35219e03a40ac4d` antes de actualizar documentación y exclusiones de publicación. En este cierre no se modificó código Kotlin, recursos Android, dependencias ni pruebas.
 
-## Revisión del login con ejemplo 025
+APROBADO indica evidencia concreta y su procedencia. FALLÓ distingue un fallo del entorno de un fallo de la aplicación. NO VERIFICADO significa que no se ejecutó esa comprobación o no se dispone del resultado.
 
-Se comparó el MainActivity.kt del 025 recibido y se adaptó su pantalla de campos y callbacks al estado del 102. Esta revisión mantiene el diseño sencillo. Se volvieron a ejecutar las seis pruebas puras de dominio con Kotlin 2.0.21 y JUnit 4.13.2: OK (6 tests). El análisis de los 26 archivos Kotlin/KTS no encontró errores de sintaxis ni comentarios; XML y TOML son válidos. Estas comprobaciones no son una compilación Android. Falta ejecutar testDebugUnitTest y assembleDebug de esta revisión en el equipo del estudiante y comprobar login/cámara/mapa/QR en el teléfono. Las pruebas instrumentadas siguen pendientes.
+| Comprobación | Estado | Evidencia y límite |
+|---|---|---|
+| Compilación y tarea de pruebas unitarias de la versión final en Windows | APROBADO | Salida aportada por Oliver: `testDebugUnitTest assembleDebug`, BUILD SUCCESSFUL en 1 min 5 s, 47 tareas ejecutadas. No se adjuntó el informe XML para auditar cada caso por separado. |
+| Instalación, colores, aceptar/rechazar compra y persistencia en HONOR | APROBADO | Confirmación del estudiante después del recorrido de prueba final. La compra 20 → 19 también quedó confirmada expresamente en OYL_Dark anterior. No es una nueva ejecución del revisor. |
+| Registro, login, roles, formularios, QR, mapas y estados de pedidos | APROBADO en pruebas manuales previas comunicadas | Se conserva la lógica revisada. No se repitieron esas pruebas físicas durante este cierre. |
+| Cámara y permisos en el teléfono durante este cierre | NO VERIFICADO | Implementación revisada; falta resultado específico de captura, guardado y reapertura en esta revisión. |
+| Animaciones y todas las rutas en ejecución durante este cierre | NO VERIFICADO | Existen y se revisaron estáticamente. No hay una prueba automática de todas las rutas. |
+| Nueva ejecución de Gradle en el entorno de revisión | FALLÓ: entorno | `bash gradlew testDebugUnitTest assembleDebug` terminó con `java.net.SocketException: Network is unreachable` al descargar Gradle 8.14.3. No llegó a compilar ni ejecutar tests. |
+| Pruebas instrumentadas | NO VERIFICADO | No hay SDK, adb, emulador ni teléfono conectado en este entorno. |
+| XML y referencias a imágenes | APROBADO: revisión estática | XML parseados correctamente y todos los drawables referenciados presentes. Esto no sustituye la compilación de recursos de Android. |
+| Integridad del ZIP y comparación con GitHub | APROBADO | ZIP sin errores CRC. Comparación por SHA de blobs: lógica, esquema de datos, ViewModel y pruebas coinciden con la base publicada; cambios del ZIP final en interfaz y fotografías. |
 
-## Evidencia del equipo del estudiante
+## Pruebas automatizadas existentes
 
-El 18 de octubre de 2026 las capturas mostraron BUILD SUCCESSFUL para assembleDebug y testDebugUnitTest. Una captura posterior mostró la bienvenida en el teléfono. El recorrido completo aún no está verificado.
+`app/src/test/java/cl/oyl/frutossecos/ValidacionesTest.kt`: seis tests JUnit para registro vacío/válido, precio decimal y stock negativo, límites de cantidad, secuencia de estados y contraseñas con sal.
 
-Esta revisión elimina etiquetas académicas de la interfaz y limpia las descripciones originales ya guardadas, conservando modificaciones del usuario. Mantiene el aviso breve de pago simulado. Estos cambios requieren recompilar y comprobar la actualización sin desinstalar.
+`app/src/androidTest/java/cl/oyl/frutossecos/PersistenciaTest.kt`: cuatro tests con Room en memoria: carritos separados, prevención de sobreventa, cambio de estado sin segundo descuento y salida de stock inválida. Estas pruebas en memoria no comprueban persistencia tras cerrar el proceso.
 
-## Comprobaciones anteriores en este entorno
+`app/src/androidTest/java/cl/oyl/frutossecos/ProductoQrTest.kt`: dos tests para JSON válido y rechazo de datos incompletos o inválidos.
 
-La compilación Android se intentó en modo offline. Se detuvo al resolver el plugin Android 8.13.0 porque este entorno no tiene las dependencias de Google almacenadas ni un SDK Android instalado. Esto no demuestra que la aplicación compile o funcione. Las pruebas instrumentadas y las pruebas manuales deben ejecutarse en Android Studio y en un dispositivo.
+## Ejecutar en Windows
 
-Las seis pruebas de `ValidacionesTest` sí se ejecutaron con JUnit 4.13.2: `OK (6 tests)`. Se compilaron las clases puras de dominio con el compilador Kotlin 2.0.21 incluido en Gradle; esto no sustituye la compilación completa con Kotlin 2.2.10 y el SDK Android.
-
-Después de estas correcciones se analizaron 26 archivos Kotlin y scripts Kotlin sin errores de sintaxis. También se interpretaron los XML y TOML. Estas comprobaciones no resuelven tipos ni APIs de Android/Compose y no equivalen a una compilación Android aprobada. La alineación con los ejemplos originales sigue en revisión.
-
-## Recorrido de comprobación
-
-1. Abrir la app sin sesión: comprobar bienvenida y animación.
-2. Registrar un cliente A con datos ficticios. Probar antes campos vacíos, correo inválido y claves distintas; cada error debe aparecer en su campo.
-3. Cerrar sesión, probar clave incorrecta y luego ingresar correctamente.
-4. Buscar y filtrar catálogo; revisar nombre, categoría, precio, presentación y stock.
-5. Agregar productos, cambiar cantidades, quitar un artículo y cerrar la app. Al volver, sesión y carrito deben conservarse.
-6. Crear cliente B: su carrito e historial deben estar vacíos. Volver al cliente A y comprobar que conserva los suyos.
-7. Continuar al pago de demostración y simular primero un rechazo: no debe crearse pedido ni cambiar el carrito o stock. Reintentar con pago aprobado: guardar el número, revisar líneas y total, comprobar que su carrito se vacía.
-8. Ingresar como admin y comprobar la rebaja exacta del stock. Avanzar el estado a Confirmado, Preparado y Entregado; el stock no debe rebajarse otra vez.
-9. Crear producto con precio inválido y después corregirlo. Tomar una foto y guardarla. Reiniciar la app y comprobar la imagen.
-10. Editar precio y presentación. Desactivar y reactivar el producto; un cliente no debe ver artículos inactivos.
-11. Registrar entrada y salida de stock con motivo. Una salida excesiva debe rechazarse sin alterar existencias ni historial.
-12. Generar un QR externo en modo Texto con uno de los objetos de `qr_productos.json`, como hace el profesor en clase 063. Leerlo y comprobar que muestra nombre, descripción y precio. Un cliente abre la ficha y admin abre inventario mediante el botón del resultado. Probar texto inválido, JSON incompleto y un producto no registrado.
-13. Abrir mapa, tocar marcadores y consultar horario. Probar ubicación concedida, aproximada y denegada. Denegar no debe impedir ver las tiendas de prueba.
-14. Cambiar avatar y perfil, reiniciar y verificar persistencia. Desactivar avisos y confirmar que no se crean nuevos para ese perfil.
-15. Ver pedidos con cliente B: no debe mostrar pedidos ni líneas de A. Revisar avisos por usuario.
-16. Probar Atrás, rotación, teclado abierto y pantalla pequeña. Los filtros deben poder desplazarse y los formularios deben poder recorrerse completos.
-
-## Dos compradores y stock insuficiente
-
-Dejar 3 unidades de un producto. Colocar 2 unidades en el carrito de A y 2 en el de B. Confirmar A: deben quedar 1. Confirmar B: debe rechazarse, conservar su carrito y no registrar un pedido parcial.
-
-## Comandos
+Desde la carpeta raíz del proyecto:
 
 ```powershell
-.\gradlew.bat testDebugUnitTest
-.\gradlew.bat connectedDebugAndroidTest
-.\gradlew.bat assembleDebug
+.\gradlew.bat testDebugUnitTest assembleDebug
+Start-Process .\app\build\reports\tests\testDebugUnitTest\index.html
 ```
 
-Registrar los resultados reales y los errores antes de preparar la entrega. No marcar como aprobada una prueba que no se haya ejecutado.
+Esperado: BUILD SUCCESSFUL y seis tests aprobados, cero fallidos en el informe. El APK queda en `app/build/outputs/apk/debug/app-debug.apk`.
+
+Con un dispositivo de pruebas conectado o un emulador:
+
+```powershell
+.\gradlew.bat connectedDebugAndroidTest
+Start-Process .\app\build\reports\androidTests\connected\debug\index.html
+```
+
+Esperado: BUILD SUCCESSFUL y seis tests instrumentados aprobados. Si la ruta del informe cambia, abrir el archivo `index.html` dentro de `app/build/reports/androidTests/connected`. Gradle instala la app de prueba y el APK instrumentado; usar la misma firma si se elige el HONOR con datos existentes. Las pruebas actuales crean una base en memoria separada de `oyl.db`.
+
+## Pruebas manuales importantes
+
+1. Anotar el stock actual; rechazar una compra: no aparece pedido nuevo, el stock no cambia y el carrito sigue completo.
+2. Aceptar una compra de una unidad: exactamente un pedido, stock menos uno y carrito vacío. Avanzar estado no descuenta de nuevo.
+3. Cerrar y volver a abrir: pedido y stock permanecen. Cambiar de cliente: cada uno ve su carrito y pedidos.
+4. Crear un producto vacío: aparecen errores. Como cliente no aparecen controles administrativos.
+5. En perfil, tomar y guardar una foto, cerrar y abrir para verla. En edición de producto, tomar foto y pulsar Guardar producto.
+6. Escanear un QR conocido; cancelar otro escaneo y probar un texto inválido. Revisar mapa y permiso de ubicación denegado. Sin permiso deben seguir visibles los puntos de retiro.
+7. Tocar la marca en bienvenida; expandir detalle de un pedido. Probar atrás sin salir accidentalmente de la demostración.
+
+## Cobertura que conviene ampliar después
+
+Sin cambiar dependencias: tests instrumentados del repositorio para registro duplicado, contraseña/rol incorrectos y operaciones administrativas rechazadas al cliente; base Room en archivo temporal para cierre/reapertura; rollback ante un fallo en mitad de una compra de varios productos; aislamiento de pedidos y avisos; producto inactivo y carrito vacío. El rechazo por botón y la doble pulsación requieren prueba de interfaz; hoy se comprueban manualmente. No se agregaron tests sin poder compilarlos ni se instalaron dependencias nuevas.
+
+## Relación con el profesor
+
+Clases 043 y 063: datos del producto, inventario, pedidos y sus cuatro estados; pago emulado con aceptar/rechazar; SQLite local; push para el siguiente control. Clase 055: formularios reactivos y separación de responsabilidades. Esa transcripción menciona sección 003 y museo: se usa para la técnica, no para trasladar reglas de otro caso a OYL.
+
+Ejemplos contrastados: 025 login Compose; 100 Scaffold y barras; 101 Room, entidades y DAO; 102 ViewModel y StateFlow; 103 cámara y utilidades; mapas con MapView; 105 Code Scanner y JSONObject; 106 ObjectAnimator y AnimatorSet. Se comprobaron mecanismos compartidos, no identidad literal de toda la aplicación.
+
+La rúbrica incluye planificación real en Trello o similar. No hay evidencia disponible para dar ese requisito por cumplido. La actualización actual de GitHub fue solicitada por Oliver, quien indicó autorización del profesor. No se fabrican tareas ni actividad previa. El documento 059 no está entre los archivos disponibles de este cierre: no se certifica una comparación visual exhaustiva de sus 15 mockups.

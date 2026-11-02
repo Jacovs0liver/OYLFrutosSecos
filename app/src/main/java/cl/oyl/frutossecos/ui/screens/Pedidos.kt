@@ -45,7 +45,7 @@ fun Pedidos(s: EstadoOyl, vm: OylViewModel) {
                         }
                     }
                     if (s.esAdmin) Validaciones.siguienteEstado(p.estado)?.let { siguiente ->
-                        Button(onClick = { vm.avanzarPedido(p.id) }, enabled = !s.ocupado) { Text("Marcar: $siguiente") }
+                        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.avanzarPedido(p.id) }, enabled = !s.ocupado) { Text("Marcar: $siguiente") }
                     }
                 }
             }

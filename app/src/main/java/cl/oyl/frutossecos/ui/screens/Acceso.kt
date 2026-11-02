@@ -26,7 +26,7 @@ fun Bienvenida(vm: OylViewModel) {
                 MarcaAnimada(Modifier.fillMaxWidth().height(220.dp))
                 Text("Naturalmente,\npara tu día.", style = MaterialTheme.typography.displaySmall)
                 Text("Descubre nuestros productos, prepara tu pedido y elige dónde retirarlo.", style = MaterialTheme.typography.bodyLarge)
-                Button(onClick = { vm.abrir(Ruta.Login) }, modifier = Modifier.fillMaxWidth()) { Text("Comenzar") }
+                Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = { vm.abrir(Ruta.Login) }, modifier = Modifier.fillMaxWidth()) { Text("Comenzar") }
                 OutlinedButton(onClick = { vm.abrir(Ruta.Catalogo) }, modifier = Modifier.fillMaxWidth()) { Text("Explorar catálogo") }
                 TextButton(onClick = { vm.abrir(Ruta.Mapa) }) { Text("Ver puntos de retiro") }
             }
@@ -88,7 +88,7 @@ private fun LoginScreen(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
         )
-        Button(onClick = alIngresar, enabled = !ocupado, modifier = Modifier.fillMaxWidth()) {
+        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = alIngresar, enabled = !ocupado, modifier = Modifier.fillMaxWidth()) {
             Text("Entrar")
         }
         TextButton(onClick = alRegistrarse) { Text("Crear cuenta de cliente") }
@@ -137,7 +137,7 @@ private fun FormularioPerfil(s: EstadoOyl, vm: OylViewModel, registro: Boolean) 
             Text("Avisos de la aplicación")
             Switch(checked = avisos, onCheckedChange = { vm.cambiarCampo("avisos", it.toString()) })
         }
-        Button(onClick = {
+        Button(colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer), onClick = {
             if (registro) vm.registrar(nombre, alias, correo, telefono, direccion, clave, repetir)
             else vm.guardarPerfil(nombre, alias, correo, telefono, direccion, avisos)
         }, enabled = !s.ocupado, modifier = Modifier.fillMaxWidth()) { Text(if (registro) "Crear mi cuenta" else "Guardar cambios") }
