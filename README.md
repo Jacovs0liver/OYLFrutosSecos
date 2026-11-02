@@ -1,46 +1,31 @@
 # OYL Frutos Secos
 
-Aplicación Android para consultar productos, preparar un carrito y realizar pedidos. El administrador puede gestionar productos, fotografías, inventario y estados de los pedidos.
+**Estudiante:** Oliver Edgardo Jacobs Suazo  
+**Asignatura:** Desarrollo de Aplicaciones Móviles (DSY1105)  
+**Sección:** 004D · Duoc UC
 
-**Oliver Edgardo Jacobs Suazo** · DSY1105 · sección 004D · Duoc UC. Profesor: Cristián Armando Gómez Vega.
+Aplicación Android para consultar frutos secos, realizar pedidos y administrar productos e inventario. Los datos se guardan localmente en el teléfono.
 
-## Qué incluye
+## Funcionalidades
 
-- Registro, inicio de sesión y perfiles de cliente y administrador.
+- Registro e inicio de sesión con roles de cliente y administrador.
 - Catálogo con fotografías, búsqueda y categorías.
-- Carrito por cliente y compra simulada: aceptar guarda el pedido y descuenta existencias; rechazar conserva el carrito sin registrar una compra.
-- Gestión de productos, movimientos de inventario y seguimiento de pedidos.
+- Carrito y pago simulado, sin cobro real.
+- Pedidos con seguimiento de estado y descuento de existencias.
+- Gestión de productos e inventario.
 - Formularios validados, cámara, lector QR, mapas y animaciones.
-- Diseño Dark Minimal con Material 3.
+- Diseño Dark Minimal.
 
-Está desarrollada en Kotlin y Jetpack Compose. El ViewModel maneja el estado con StateFlow, el repositorio aplica las reglas y los DAO acceden a Room sobre SQLite. Los ejemplos de clases se adaptaron al caso OYL.
+## Tecnologías
 
-No hay cobros reales, backend ni sincronización entre teléfonos. Los mapas descargan sus zonas por internet; el lector QR requiere Servicios de Google Play y puede necesitar una descarga inicial. Los avisos son locales, no push. Los productos y puntos de retiro iniciales son de demostración; las fotografías incluidas fueron generadas para el proyecto.
+Kotlin, Jetpack Compose, Material 3, ViewModel con StateFlow y Room sobre SQLite. Lectura QR con Google Code Scanner y mapas con osmdroid.
 
-## Ejecutar
+## Ejecutar en Android Studio
 
-1. Clonar este repositorio o extraer el ZIP y abrir la carpeta que contiene `settings.gradle.kts` en Android Studio.
-2. Usar el JDK integrado e instalar Android SDK 36 si se solicita. El teléfono debe tener Android 8.0 o superior.
-3. Sincronizar con internet. El wrapper descarga Gradle 8.14.3 y las dependencias del proyecto.
-4. Desde PowerShell, en la carpeta del proyecto:
+1. Clonar o descargar el repositorio y abrir la carpeta que contiene `settings.gradle.kts`.
+2. Usar el JDK integrado de Android Studio e instalar Android SDK 36.
+3. Sincronizar Gradle con conexión a internet.
+4. Conectar un teléfono con Android 8.0 o superior y depuración USB habilitada, o iniciar un emulador.
+5. Seleccionar el dispositivo y ejecutar el módulo `app` con **Run**.
 
-```powershell
-.\gradlew.bat testDebugUnitTest assembleDebug
-```
-
-5. Conectar el teléfono con depuración USB y ejecutar `app` después de una compilación correcta.
-
-Para mantener los datos de una instalación anterior, no desinstalar ni borrar el almacenamiento; la actualización debe conservar la firma.
-
-Administrador de prueba: rol **Administrador**, alias `admin`, contraseña `123`. Los clientes se crean desde Registro.
-
-## Validación y defensa
-
-La versión final compiló en Windows con `testDebugUnitTest assembleDebug` (`BUILD SUCCESSFUL`, 47 tareas ejecutadas) y fue instalada y probada por Oliver en su HONOR RBN-NX3. Confirmó aceptar y rechazar compras, el descuento de stock y la persistencia al cerrar y abrir.
-
-Las pruebas instrumentadas no se han confirmado. La revisión posterior del código no cambió Kotlin, recursos, dependencias ni pruebas; el intento de recompilar en el entorno de revisión se bloqueó al descargar Gradle por falta de acceso de red.
-
-- [Pruebas y resultados](documentacion/Pruebas.md)
-- [Guía práctica de defensa](documentacion/Guion_breve_y_respuestas.md)
-
-Los demás documentos conservan notas anteriores y pueden describir estados históricos. La entrega original de AVA y su video permanecen sin cambios.
+Para utilizar el lector QR, el dispositivo necesita Servicios de Google Play.

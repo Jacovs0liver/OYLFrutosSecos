@@ -1,5 +1,0 @@
-OYL EP2: código final conservado sin cambios.
-Compilación y prueba física final confirmadas por Oliver en Windows y HONOR RBN-NX3.
-Nueva compilación en el entorno de revisión bloqueada por red; pruebas instrumentadas no verificadas.
-Resultados y comandos: documentacion/Pruebas.md
-Defensa: documentacion/Guion_breve_y_respuestas.md
